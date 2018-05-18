@@ -159,7 +159,7 @@ body:before {
   <div class="thumbnail"><img style="margin-top: -40px; height:120px; width: 110px; margin-left: -10px" src="images/ic3.png"/></div>
   <form class="register-form">
     <input type="text" placeholder="Email"/>
-    <input type="password" placeholder="password"/>
+    <input type="password" placeholder="Password"/>
     <input type="text" placeholder="email address"/>
     <button>create</button>
     <p class="message">Already registered? <a href="#">Sign In</a></p>
