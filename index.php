@@ -20,6 +20,7 @@
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
+						<li><a href="index.html">Home2</a></li>
 						<li><a href="generic.html">Login</a></li>
 						<li><a href="register.php">Register</a></li>
 						<li><a href="elements.html">About Us</a></li>
