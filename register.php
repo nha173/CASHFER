@@ -157,27 +157,39 @@ body:before {
 </div>
 <div style="margin-top: -50px" class="form">
   <div class="thumbnail"><img style="margin-top: -40px; height:120px; width: 110px; margin-left: -10px" src="images/ic3.png"/></div>
-  <form class="register-form">
-    <input type="text" placeholder="Email"/>
-    <input type="password" placeholder="password"/>
-    <input type="text" placeholder="email address"/>
-    <button>create</button>
-    <p class="message">Already registered? <a href="#">Sign In</a></p>
-  </form>
-  <form class="login-form">
-    <input type="text" placeholder="Email"/>
-    <input type="password" placeholder="password"/>
-    <button><span style="top: -40px">Register</span> </button>
-    <p class="message">Already a member ? <a href="#">Login</a></p>
-  </form>
+  
+  <form id='register' action='register.php' method='post' 
+    accept-charset='UTF-8'>
+<fieldset >
+<legend>Register</legend>
+<input type='hidden' name='submitted' id='submitted' value='1'/>
+<label for='name' >Your Full Name*: </label>
+<input type='text' name='name' id='name' maxlength="50" />
+<label for='email' >Email Address*:</label>
+<input type='text' name='email' id='email' maxlength="50" />
+
+<label for='username' >UserName*:</label>
+<input type='text' name='username' id='username' maxlength="50" />
+
+<label for='password' >Password*:</label>
+<input type='password' name='password' id='password' maxlength="50" />
+<input type='submit' name='Submit' value='Submit' />
+
+</fieldset>
+</form>
 </div>
+var frmvalidator  = new Validator("register");
+frmvalidator.EnableOnPageErrorDisplay();
+frmvalidator.EnableMsgsTogether();
+frmvalidator.addValidation("name","req","Please provide your name");
 
+frmvalidator.addValidation("email","req","Please provide your email address");
 
+frmvalidator.addValidation("email","email","Please provide a valid email address");
 
+frmvalidator.addValidation("username","req","Please provide a username");
 
-
-
-				
+frmvalidator.addValidation("password","req","Please provide a password");
 				</div>
 			</section>
 
