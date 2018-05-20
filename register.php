@@ -70,11 +70,9 @@
 }
 .form input {
   outline: 0;
-  background: #f2f2f2;
   width: 100%;
   border: 0;
   margin: 0 0 15px;
-  padding: 15px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -164,32 +162,21 @@ body:before {
 <legend>Register</legend>
 <input type='hidden' name='submitted' id='submitted' value='1'/>
 <label for='name' >Your Full Name*: </label>
-<input type='text' name='name' id='name' maxlength="50" />
+<input type='text' name='name' id='name' maxlength="50" required />
 <label for='email' >Email Address*:</label>
-<input type='text' name='email' id='email' maxlength="50" />
+<input type='text' name='email' id='email' maxlength="50" required />
 
 <label for='username' >UserName*:</label>
-<input type='text' name='username' id='username' maxlength="50" />
+<input type='text' name='username' id='username' maxlength="50" required/>
 
 <label for='password' >Password*:</label>
-<input type='password' name='password' id='password' maxlength="50" />
+<input type='password' name='password' id='password' maxlength="50" required/>
 <input type='submit' name='Submit' value='Submit' />
 
 </fieldset>
 </form>
 </div>
-var frmvalidator  = new Validator("register");
-frmvalidator.EnableOnPageErrorDisplay();
-frmvalidator.EnableMsgsTogether();
-frmvalidator.addValidation("name","req","Please provide your name");
 
-frmvalidator.addValidation("email","req","Please provide your email address");
-
-frmvalidator.addValidation("email","email","Please provide a valid email address");
-
-frmvalidator.addValidation("username","req","Please provide a username");
-
-frmvalidator.addValidation("password","req","Please provide a password");
 				</div>
 			</section>
 
