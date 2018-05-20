@@ -71,7 +71,7 @@
 .form input {
   outline: 0;
   width: 100%;
-  border: 0;
+  border: 5;
   margin: 0 0 15px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -165,10 +165,8 @@ body:before {
 <input type='text' name='name' id='name' maxlength="50" required />
 <label for='email' >Email Address*:</label>
 <input type='text' name='email' id='email' maxlength="50" required />
-
 <label for='username' >UserName*:</label>
 <input type='text' name='username' id='username' maxlength="50" required/>
-
 <label for='password' >Password*:</label>
 <input type='password' name='password' id='password' maxlength="50" required/>
 <input type='submit' name='Submit' value='Submit' />
