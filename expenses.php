@@ -1,5 +1,14 @@
 
 <?php include 'include/head.php';?>
+<?php include 'include/db_connection.php';
+$conn = OpenCon();
+echo "Connected Successfully";
+$userid = 123123;
+if(isset($_POST['months'])){
+  $month = $_POST['months'];}
+  
+  else $month = date('m');
+?>
 
 <body>	
 <div class="page-container">	
@@ -44,36 +53,70 @@
 					</div>
 
 					<h3 style="margin-top: -20px; font-size: 18px">Expenses</h3>
+          <div>
+                <h5>For :</h5> 
+                <form id='monthform' action ='expenses.php' method='post'>
+                  <select name="months" id="selectmonth" onchange="updatemonth()">
+                      <option disabled selected value> -- Select month-- </option>
+                      <option value="1">Jan</option>
+                      <option value="2">Feb</option>
+                      <option value="3">Mar</option>
+                      <option value="4">Apr</option>
+                      <option value="5">May</option>
+                      <option value="6">June</option>
+                      <option value="7">July</option>
+                      <option value="8">Aug</option>
+                      <option value="9">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>                                                                                                  
+                                                      
+                  </select>
+                </form>                                
+          </div>
+            <div class='row'>
+            
+            <div class='receipt-main '>
+            
+            <br/>
+                <div>
+                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+<?php 
 
-				
 
-					<div class="row">
-					
-			        <div class="receipt-main ">
-			            
-			            <div>
-			                <table style="width: 400px; margin-bottom: 60px" class="table table-bordered">
-			                	<h5 style="margin-bottom: 10px; text-align: left;">1 May 2018</h5>
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `expense_list` WHERE month(date) = '$month' and userid =$userid;" ;  
+          $result = mysqli_query($conn,$line); 
+          $id_pro = mysqli_fetch_assoc($result);
+          $date1 = $id_pro['date'];
+          $exp_date= $id_pro['fdate'];
+         
+   
+          echo" <h5 style='margin-bottom: 10px; text-align: left;'>$exp_date</h5>";
+
+?>
+
+
 			                    <thead>
 			                        <tr>
-			                            <th style="font-size: 12px; text-align: center;">Description </th>
-			                            <th style="font-size: 12px">Amount</th>
+			                            <th style='font-size: 12px; text-align: center;'>Description </th>
+			                            <th style='font-size: 12px'>Amount</th>
 			                        </tr>
 			                    </thead>
-			                    <tbody>
-			                        <tr>
-			                            <td class="col-md-9">Clothings</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">Food & Drinks</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">House Rental</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr style="background: #689999">
+                          <tbody>
+<?php 
+ $line2 =	"select * from `expense_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result2 = mysqli_query($conn,$line2); 
+ while($id_pro2 = mysqli_fetch_assoc($result2)){
+   $exp_cat= $id_pro2['expense_category'];
+   $exp = $id_pro2['expenses'];
+   echo"
+                             <tr>
+			                            <td class='col-md-9'>$exp_cat</td>
+			                            <td class='col-md-3'>RM $exp</td>
+                              </tr>";}
+?>
+
+			                        <tr style='background: #689999'>
 			                            <td >
 			                            <p>
 			                                <strong>Total Amount: </strong>
@@ -275,9 +318,16 @@ var date = new Date(),
     day = date.getUTCDate(),
     months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-document.getElementById('daymonth').innerHTML = months[month] + " " ;
-document.getElementById('year').innerHTML = year;
-
+<?php 
+if(isset($_POST['months'])){
+  echo"setSelectBoxByValue('selectmonth', '$month');";
+}
+else
+  echo"
+document.getElementById('daymonth').innerHTML = months[month] + '' ;
+setSelectBoxByText('selectmonth', months[month]);
+document.getElementById('year').innerHTML = year;";
+?>
 var clockH = $(".hours");
 var clockM = $(".minutes");
 
@@ -288,6 +338,23 @@ function time() {
       h = d.getHours() % 12 / 12 * 360 + (m / 12);  
     clockH.css("transform", "rotate("+h+"deg)");
     clockM.css("transform", "rotate("+m+"deg)");  
+}
+
+function setSelectBoxByText(eid, etxt) {
+    var eid = document.getElementById(eid);
+    for (var i = 0; i < eid.options.length; ++i) {
+        if (eid.options[i].text === etxt)
+            eid.options[i].selected = true;
+    }
+}
+
+function setSelectBoxByValue(eid, eval) {
+    document.getElementById(eid).value = eval;
+}
+
+function updatemonth(){
+  document.getElementById('daymonth').innerHTML = $('#selectmonth').find(":selected").text();
+  document.getElementById("monthform").submit();
 }
 
 var clock = setInterval(time, 1000);
