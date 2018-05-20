@@ -164,11 +164,17 @@ body:before {
 <label for='name' >Your Full Name*: </label>
 <input type='text' name='name' id='name' maxlength="50" required />
 <label for='email' >Email Address*:</label>
-<input type='text' name='email' id='email' maxlength="50" required />
+<input type='text' name='email' id='email' maxlength="50" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required />
 <label for='username' >UserName*:</label>
 <input type='text' name='username' id='username' maxlength="50" required/>
+
+<link rel="stylesheet" type="text/css" href="/code_examples/tutorial.css">
+<script type="text/javascript" src="/code_examples/passtest.js"></script>
 <label for='password' >Password*:</label>
-<input type='password' name='password' id='password' maxlength="50" required/>
+<input type='password' name='password' id='password1' maxlength="50" required/>
+<label for='password' >Retype Password*:</label>
+<input type='password' name='password' id='password2' maxlength="50" required  onkeyup="checkPass(); return false;">
+<span id="confirmMessage" class="confirmMessage"></span>
 <input type='submit' name='Submit' value='Submit' />
 
 </fieldset>
@@ -199,6 +205,35 @@ body:before {
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+      <script>
+      function checkPass()
+{
+    //Store the password field objects into variables ...
+    var pass1 = document.getElementById('password1');
+    var pass2 = document.getElementById('password2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(password1.value == password2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        pass2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        pass2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+} 
+      </script>
 	</body>
 </html>
