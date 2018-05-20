@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Generic - Spatial by TEMPLATED</title>
+		<title>Cashfer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -70,11 +70,9 @@
 }
 .form input {
   outline: 0;
-  background: #f2f2f2;
   width: 100%;
-  border: 0;
+  border: 5;
   margin: 0 0 15px;
-  padding: 15px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -164,32 +162,25 @@ body:before {
 <legend>Register</legend>
 <input type='hidden' name='submitted' id='submitted' value='1'/>
 <label for='name' >Your Full Name*: </label>
-<input type='text' name='name' id='name' maxlength="50" />
+<input type='text' name='name' id='name' maxlength="50" required />
 <label for='email' >Email Address*:</label>
-<input type='text' name='email' id='email' maxlength="50" />
-
+<input type='text' name='email' id='email' maxlength="50" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required />
 <label for='username' >UserName*:</label>
-<input type='text' name='username' id='username' maxlength="50" />
+<input type='text' name='username' id='username' maxlength="50" required/>
 
+<link rel="stylesheet" type="text/css" href="/code_examples/tutorial.css">
+<script type="text/javascript" src="/code_examples/passtest.js"></script>
 <label for='password' >Password*:</label>
-<input type='password' name='password' id='password' maxlength="50" />
+<input type='password' name='password' id='password1' maxlength="50" required/>
+<label for='password' >Retype Password*:</label>
+<input type='password' name='password' id='password2' maxlength="50" required  onkeyup="checkPass(); return false;">
+<span id="confirmMessage" class="confirmMessage"></span>
 <input type='submit' name='Submit' value='Submit' />
 
 </fieldset>
 </form>
 </div>
-var frmvalidator  = new Validator("register");
-frmvalidator.EnableOnPageErrorDisplay();
-frmvalidator.EnableMsgsTogether();
-frmvalidator.addValidation("name","req","Please provide your name");
 
-frmvalidator.addValidation("email","req","Please provide your email address");
-
-frmvalidator.addValidation("email","email","Please provide a valid email address");
-
-frmvalidator.addValidation("username","req","Please provide a username");
-
-frmvalidator.addValidation("password","req","Please provide a password");
 				</div>
 			</section>
 
@@ -214,6 +205,35 @@ frmvalidator.addValidation("password","req","Please provide a password");
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+      <script>
+      function checkPass()
+{
+    //Store the password field objects into variables ...
+    var pass1 = document.getElementById('password1');
+    var pass2 = document.getElementById('password2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(password1.value == password2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        pass2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        pass2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+} 
+      </script>
 	</body>
 </html>

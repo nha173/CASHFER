@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Spatial by TEMPLATED</title>
+	<title>Cashfer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -22,7 +22,7 @@
 						<li><a href="index.php">Home</a></li>
 						<li><a href="login.php">Login</a></li>
 						<li><a href="register.php">Register</a></li>
-						<li><a href="elements.html">About Us</a></li>
+						<li><a href="#">About Us</a></li>
 					</ul>
 				</nav>
 			</header>
