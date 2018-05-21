@@ -1,4 +1,29 @@
 <?php include 'include/head.php';?>
+<?php include 'include/db_connection.php';
+$conn = OpenCon();
+echo "Connected Successfully";
+$userid = 123123;
+if(isset($_POST['month'])){
+  $month = $_POST['month'];
+}else {
+  $month = date('m');
+  $income=0;
+  $expen=0;}
+  
+  $line =	"select sum(expenses) as sum,DATE_FORMAT(date, '%M %Y')as fdate from `expense_list` WHERE month(date) = '$month' and userid =$userid;" ;  
+  $result = mysqli_query($conn,$line); 
+  $exp_pro = mysqli_fetch_assoc($result);
+  $expen = $exp_pro['sum'];
+  $fdate = $exp_pro['fdate'];
+  
+  $line2 =	"select sum(incomes) as sumi from `incomes_list` WHERE month(date) = '$month' and userid =$userid;" ;  
+
+  $result2 = mysqli_query($conn,$line2); 
+  $inc_pro = mysqli_fetch_assoc($result2);
+  $income= $inc_pro['sumi'];
+
+  $total =$income-$expen;
+?>
 
 <body>	
 <div class="page-container">	
@@ -29,7 +54,9 @@
     <div class="blank">
 	    	<div class="blankpage-main">
 	    		<div class="content">
-	    			<div class="report-overview-module"></div>
+	    			<div class="report-overview-module">
+            
+            </div>
 				</div>
     	</div>
     </div>
@@ -274,35 +301,54 @@ h2 {
       return [
         '<div>',
         '<h2>Monthly Report Overview</h2>',
+        '<form id="monthform" action="report.php" name = "monthform" method="post">',
+       
+       '<select name="month" onchange="updatemonth()">',
+       '<option disabled selected value> -- Select month-- </option>',
+       '<option value="1">January</option>',
+       '<option value="2">February</option>',
+       '<option value="3">March</option>',
+       '<option value="4">April</option>',
+       '<option value="5">May</option>',
+       '<option value="6">June</option>',
+       '<option value="7">July</option>',
+       '<option value="8">August</option>',
+       '<option value="9">September</option>',
+       '<option value="10">October</option>',
+       '<option value="11">November</option>',
+       '<option value="12">December</option>',
+       
+   '</select>',
+'</form>',
         '<div class="row">',
         '<div class="col-md-12">',
         '<div class="report-statistic-box">',
         '<div class="box-header">Incomes</div>',
         '<div class="box-content">',
-        '<div class="sentTotal">{{sentTotal}}</div>'.replace(/{{sentTotal}}/, options.data.sentTotal),
+        '<div class="sentTotal"><?php echo $income;?></div>',
         '</div>',
         '<div class="box-foot">',
-        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong>{{date}}</strong></span></div>'.replace(/{{date}}/, options.data.date),
+        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong><?php echo $fdate;?></strong></span></div>',
         '</div>',
         '</div>',
 
          '<div class="report-statistic-box">',
         '<div class="box-header">Expenses</div>',
         '<div class="box-content">',
-        '<div class="sentTotal">{{sentTotal}}</div>'.replace(/{{sentTotal}}/, options.data.sentTotal),
+        '<div class="sentTotal"><?php echo$expen;?></div>',
         '</div>',
         '<div class="box-foot">',
-        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong>{{date}}</strong></span></div>'.replace(/{{date}}/, options.data.date),
+        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong><?php echo $fdate;?></strong></span></div>',
         '</div>',
         '</div>',
 
          '<div class="report-statistic-box">',
-        '<div class="box-header">Saved</div>',
+        '<div class="box-header">Saved/Loss</div>',
         '<div class="box-content">',
-        '<div class="sentTotal">{{sentTotal}}</div>'.replace(/{{sentTotal}}/, options.data.sentTotal),
+        '<div class="sentTotal"><?php echo$total;?></div>',
         '</div>',
         '<div class="box-foot">',
-        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong>{{date}}</strong></span></div>'.replace(/{{date}}/, options.data.date),
+        '<div class="sendTime box-foot-left">Send time<br><span class="box-foot-stats"><strong><?php echo $fdate;?></strong></span></div>',
         '</div>',
         '</div>',
       ].join('');
@@ -421,6 +467,12 @@ h2 {
 }(jQuery));
 </script>
 
+<script>
+function updatemonth(){
+  
+  document.getElementById("monthform").submit();
+}
+</script>
 
                       
 						

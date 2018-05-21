@@ -6,10 +6,9 @@ echo "Connected Successfully";
 $userid = 123123;
 if(isset($_POST['dated'])){
   $date = date('Y-m-d', strtotime($_POST['dated']));
-  echo "$date gggggg";
 }else {
-  $date = date('Y-m-d');
-    echo "alert m";}
+  $date = date('Y-m-d');}
+  
 ?>
 <html>
 <body>	
