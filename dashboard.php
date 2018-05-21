@@ -4,10 +4,7 @@
 $conn = OpenCon();
 echo "Connected Successfully";
 $userid = 123123;
-if(isset($_POST['months'])){
-  $month = $_POST['months'];}
-  
-  else $month = date('m');
+$date = date('Y-m-d');
 ?>
 <style>
 .modal {
@@ -48,6 +45,7 @@ if(isset($_POST['months'])){
     cursor: pointer;
 }
 </style>
+<html>
 <body>	
 <div class="page-container">	
    <div class="left-content">
@@ -73,10 +71,11 @@ if(isset($_POST['months'])){
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
 <div class="inner-block">
-<div id="myModalExp" class="modal">
+<h2> I want to </h2>
+<br/>
 
-  <!-- Modal content -->
-  
+<div id="myModalExp" class="modal">  <!-- Modal div 1 -->
+
   <div class="modal-content ">
     <span class="close" id="closeExp">&times;</span>
     
@@ -90,11 +89,15 @@ if(isset($_POST['months'])){
         
           <tr>
             <td class='col-md-9'>
-              Category
+              Category/Description
             </td>
             <td class='col-md-9'>
               Expense (RM)
             </td>
+            <td class='col-md-9'>
+            Date
+          </td>
+            
           </tr>
           <tr>
             <td class='col-md-9'>
@@ -103,17 +106,17 @@ if(isset($_POST['months'])){
             <td class='col-md-9'>
               <input type="text" name="expen"
             </td>
+            <td class='col-md-9'>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            </td>
           </tr>
         </table>
         <input type ="submit" > 
       </form>
   </div>
-  </div>
+</div>  <!-- Modal div 1 end>-->
 
-  <div id="myModalInc" class="modal">
-
-<!-- Modal content -->
-
+<div id="myModalInc" class="modal"> <!-- Modal div 2 -->
 <div class="modal-content ">
   <span class="close"id="closeInc">&times;</span>
   
@@ -127,82 +130,57 @@ if(isset($_POST['months'])){
       
         <tr>
           <td class='col-md-9'>
-            Category
+            Category/Description
           </td>
           <td class='col-md-9'>
             Income (RM)
           </td>
+          <td class='col-md-9'>
+            Date
+          </td>
         </tr>
         <tr>
           <td class='col-md-9'>
-            <input type="text" name="categ">
+            <input type="text" name="categi">
           </td>
           <td class='col-md-9'>
-            <input type="text" name="expen"
+            <input type="text" name="incom">
           </td>
+          <td class='col-md-9'>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            </td>
         </tr>
       </table>
-      <input type ="submit" > 
+      <input type ="submit" >   
     </form>
-</div>
-</div>
+  </div>
+</div> <!-- Modal div 2 end>-->
 
-<!--mainpage chit-chating-->
 <div class="chit-chat-layer1">
 	<div class="col-md-6 chit-chat-layer1-left">
-               <div class="work-progres">
-                    <div style="margin-top: -70px" class="box">
-						<div class="clock">
-							<span class="hours"></span>
-							<span class="minutes"></span>
-						</div>
-						<div class="date">
-							<div id="daymonth"></div>
-							<div id="year"></div>
-						</div>
+    <div class="work-progres">
+      <button id="myBtnExp" style="border:5px; padding:10px;  margin-bottom:15px;">Add Expense</button>  
 
-					</div>
+      
 
-					<h3 style="margin-top: -20px; font-size: 18px">Expenses</h3>
-          <div>
-                <h5>For :</h5> 
-                <form id='monthform' action ='AddExpense.php' method='post'>
-                  <select name="months" id="selectmonth" onchange="updatemonth()">
-                      <option disabled selected value> -- Select month-- </option>
-                      <option value="1">Jan</option>
-                      <option value="2">Feb</option>
-                      <option value="3">Mar</option>
-                      <option value="4">Apr</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">Aug</option>
-                      <option value="9">Sep</option>
-                      <option value="10">Oct</option>
-                      <option value="11">Nov</option>
-                      <option value="12">Dec</option>                                                                                                  
-                                                      
-                  </select>
-                </form>                                
-          </div>
+					<h3 >Today Expenses</h3>
+          
             <div class='row'>
             
-            <div class='receipt-main '>
-            
             <br/>
-                <div>
+                <div align="center">
                     <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
 <?php 
 
 
-          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `expense_list` WHERE month(date) = '$month' and userid =$userid;" ;  
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `expense_list` WHERE date = '$date' and userid =$userid;" ;  
           $result = mysqli_query($conn,$line); 
           $id_pro = mysqli_fetch_assoc($result);
           $date1 = $id_pro['date'];
           $exp_date= $id_pro['fdate'];
          
    
-          echo" <h5 style='margin-bottom: 10px; text-align: left;'>$exp_date</h5>";
+          echo" <h4 style='margin-bottom: 10px; text-align: center;'>$exp_date</h4>";
 
 ?>
 
@@ -215,6 +193,7 @@ if(isset($_POST['months'])){
 			                    </thead>
                           <tbody>
 <?php 
+
  $line2 =	"select * from `expense_list` WHERE date = '$date1' and userid =$userid;" ;  
  $result2 = mysqli_query($conn,$line2); 
  while($id_pro2 = mysqli_fetch_assoc($result2)){
@@ -253,43 +232,99 @@ if(isset($_POST['months'])){
 			                        </tr>
 			                    </tbody>
 			                </table>
-
-
-			            </div>
-						
+       </div>    
+				
+		</div>
 					
-						
-			        </div>    
-				</div>
-					
-        <button id="myBtnExp">Add Expense</button> <button id="myBtnInc">Add Incomes</button>
-             </div>
-      </div>
-      <div class="col-md-6 chit-chat-layer1-rit">    	
-      	  <div class="geo-chart">
-					<section id="charts1" class="charts">
-				<div class="wrapper-flex">
-				
-				   
-				
-				    <div class="col geo_main">
-				         <h3 id="geoChartTitle"></h3>
-				        <div id="geoChart" class="chart"> </div>
+ </div>    
+  </div>
+</div>
+<div class="col-md-6 chit-chat-layer1-rit">    	
+      	  <div class="work-progres">
+          <button id="myBtnInc" style="border:5px; padding:10px; margin-bottom:15px;">Add Incomes</button> 
+          <h3>Today Income</h3>	
 
-				          <script src="https://d3js.org/d3.v3.min.js"></script>
-							  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-							  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-							  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-							<div id="pie-chart"></div>
+          <div class='row'>
+          <div align="center">
+                
+                                             
+          
+            
+            
+            
+            
+            <br/>
+                <div>
+                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+<?php 
 
-				    </div>
-				
-				
-				</div><!-- .wrapper-flex -->
-				</section>				
+
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `incomes_list` WHERE date = '$date' and userid =$userid;" ;  
+          $result = mysqli_query($conn,$line); 
+          $id_pro = mysqli_fetch_assoc($result);
+          $date1 = $id_pro['date'];
+          $exp_date= $id_pro['fdate'];
+         
+   
+          echo" <h4 style='margin-bottom: 10px; text-align: center;'>$exp_date</h4>";
+
+?>
+
+
+			                    <thead>
+			                        <tr>
+			                            <th style='font-size: 12px; text-align: center;'>Description </th>
+			                            <th style='font-size: 12px'>Amount</th>
+			                        </tr>
+			                    </thead>
+                          <tbody>
+<?php 
+
+ $line2 =	"select * from `incomes_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result2 = mysqli_query($conn,$line2); 
+ while($id_pro2 = mysqli_fetch_assoc($result2)){
+   $exp_cat= $id_pro2['income_category'];
+   $exp = $id_pro2['incomes'];
+   echo"
+                             <tr>
+			                            <td class='col-md-9'>$exp_cat</td>
+			                            <td class='col-md-3'>RM $exp</td>
+                              </tr>";}
+?>
+
+			                        <tr style='background: #689999'>
+			                            <td >
+			                            <p>
+			                                <strong>Total Amount: </strong>
+			                            </p>
+										</td>
+			                           
+			                            <td>
+<?php 
+ $line3 =	"select sum(incomes) as incomes from `incomes_list` WHERE date = '$date' and userid =$userid;" ;  
+ $result3 = mysqli_query($conn,$line3); 
+ $id_pro3 = mysqli_fetch_assoc($result3);
+   $totalexp = $id_pro3['incomes'];
+   echo"
+			                            <p>
+			                                <strong>RM $totalexp</strong>
+                                  </p>";
+?>
+										</td>
+			                        </tr>
+			                        <tr>
+			                           
+			                            
+			                        </tr>
+			                    </tbody>
+			                </table>
 			</div>
       </div>
      <div class="clearfix"> </div>
+     </div>
+     </div>
+</div>
+
 </div>
 <!--main page chit chating end here-->
 <!--main page chart start here-->

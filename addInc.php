@@ -4,13 +4,13 @@ echo "Connected Successfully";
 $userid = 123123;
 $expid = getToken(6);
 $date = date('Y-m-d', strtotime($_POST['dated']));
-$cat = $_POST['categ'];
-$exps = $_POST['expen'];
+$cat = $_POST['categi'];
+$incs = $_POST['incom'];
 
-if(isset($_POST['categ'])){
+if(isset($_POST['categi'])){
 
-    $sql = "INSERT INTO expense_list (expid,userid,`date`,expense_category, expenses)
-VALUES ('$expid', '$userid', '$date','$cat',$exps)";
+    $sql = "INSERT INTO incomes_list (incid,userid,`date`,income_category, incomes)
+VALUES ('$expid', '$userid', '$date','$cat',$incs)";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: dashboard.php");

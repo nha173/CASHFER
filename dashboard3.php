@@ -4,16 +4,51 @@
 $conn = OpenCon();
 echo "Connected Successfully";
 $userid = 123123;
-if(isset($_POST['dated'])){
-  $date = date('Y-m-d', strtotime($_POST['dated']));
-  echo "$date gggggg";
-}else {
-  $date = date('Y-m-d');
-    echo "alert m";}
+$date = date('Y-m-d');
+ 
 ?>
+<style>
+.modal {
+    display: none; /* Hidden by default */
+    z-index: 1; /* Sit on top */
+    padding-top: 10%; /* Location of the box */
+    padding-left:15%;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
 <html>
-<body>	
-  
+  <body>
+
 <div class="page-container">	
    <div class="left-content">
 	   <div class="mother-grid-inner">
@@ -38,39 +73,105 @@ if(isset($_POST['dated'])){
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
 <div class="inner-block">
+<h2> I want to </h2>
+<br/>
 
+<div id="myModalExp" class="modal">  <!-- Modal div 1 -->
 
+  <div class="modal-content ">
+    <span class="close" id="closeExp">&times;</span>
+    
+      <form action="addExp.php" method="post">
+      <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+      <thead>
+			    <tr style='font-size: 12px; text-align: center;'>
+			        Add Expense 
+			    </tr>
+			</thead>                        
+        
+          <tr>
+            <td class='col-md-9'>
+              Category
+            </td>
+            <td class='col-md-9'>
+              Expense (RM)
+            </td>
+            <td class='col-md-9'>
+            Date
+          </td>
+            
+          </tr>
+          <tr>
+            <td class='col-md-9'>
+              <input type="text" name="categ">
+            </td>
+            <td class='col-md-9'>
+              <input type="text" name="expen"
+            </td>
+            <td class='col-md-9'>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            </td>
+          </tr>
+        </table>
+        <input type ="submit" > 
+      </form>
+  </div>
+</div>  <!-- Modal div 1 end>-->
+
+<div id="myModalInc" class="modal"> <!-- Modal div 2 -->
+<div class="modal-content ">
+  <span class="close"id="closeInc">&times;</span>
+  
+    <form action="addInc.php" method="post">
+    <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+    <thead>
+        <tr style='font-size: 12px; text-align: center;'>
+            Add Income 
+        </tr>
+    </thead>                        
+      
+        <tr>
+          <td class='col-md-9'>
+            Category
+          </td>
+          <td class='col-md-9'>
+            Income (RM)
+          </td>
+          <td class='col-md-9'>
+            Date
+          </td>
+        </tr>
+        <tr>
+          <td class='col-md-9'>
+            <input type="text" name="categ">
+          </td>
+          <td class='col-md-9'>
+            <input type="text" name="expen">
+          </td>
+          <td class='col-md-9'>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            </td>
+        </tr>
+      </table>
+      <input type ="submit" >   
+    </form>
+  </div>
+</div> <!-- Modal div 2 end>-->
 
 <!--mainpage chit-chating-->
 <div class="chit-chat-layer1">
 	<div class="col-md-6 chit-chat-layer1-left">
-               <div class="work-progres">
-                    <div style="margin-top: -70px" class="box">
-						<div class="clock">
-							<span class="hours"></span>
-							<span class="minutes"></span>
-						</div>
-						<div class="date">
-							<div id="daymonth"></div>
-							<div id="year"></div>
-						</div>
+    <div class="work-progres">
+      <button id="myBtnExp" style="border:5px; padding:10px;  margin-bottom:15px;">Add Expense</button>  
 
-					</div>
+      
 
-					<h3 style="margin-top: -20px; font-size: 18px">Expenses</h3>
-          <div>
-                <h5>For :</h5> 
-                <form id='monthform' action ='expenses.php' method='post'>
-                  <input name="dated" id="date" type="date" onchange="updatemonth()" <?php echo"value='$date'";?>>
-
-                </form>                                
-          </div>
+					<h3 >Today Expenses</h3>
+          
             <div class='row'>
             
-            <div class='receipt-main '>
             
-            <br/>
-                <div>
+                <div align="center">
                     <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
 <?php 
 
@@ -82,7 +183,7 @@ if(isset($_POST['dated'])){
           $exp_date= $id_pro['fdate'];
          
    
-          echo" <h5 style='margin-bottom: 10px; text-align: left;'>$exp_date</h5>";
+          echo" <h4 style='margin-bottom: 10px; text-align: center;'>$exp_date</h4>";
 
 ?>
 
@@ -134,43 +235,100 @@ if(isset($_POST['dated'])){
 			                        </tr>
 			                    </tbody>
 			                </table>
-
-
-			            </div>
-						
+       </div>    
+				
+		</div>
 					
-                  
-			        </div>    
-				</div>
-					
+ </div>    
+  </div>
+</div>
+<div class="col-md-6 chit-chat-layer1-rit">    	
+      	  <div class="work-progres">
+          <button id="myBtnInc" style="border:5px; padding:10px; margin-bottom:15px;">Add Incomes</button> 
+          <h3>Today Income</h3>	
 
-             </div>
-      </div>
-      <div class="col-md-6 chit-chat-layer1-rit">    	
-      	  <div class="geo-chart">
-					<section id="charts1" class="charts">
-				<div class="wrapper-flex">
-				
-				   
-				
-				    <div class="col geo_main">
-				         <h3 id="geoChartTitle">Spending category percentage</h3>
-				        <div id="geoChart" class="chart"> </div>
+          <div class='row'>
+          <div align="center">
+                
+                                             
+          
+            
+            
+            
+            
+            <br/>
+                <div>
+                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+<?php 
 
-				          <script src="https://d3js.org/d3.v3.min.js"></script>
-							  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-							  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-							  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-							<div id="pie-chart"></div>
 
-				    </div>
-				
-				
-				</div><!-- .wrapper-flex -->
-				</section>				
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `incomes_list` WHERE date = '$date' and userid =$userid;" ;  
+          $result = mysqli_query($conn,$line); 
+          $id_pro = mysqli_fetch_assoc($result);
+          $date1 = $id_pro['date'];
+          $exp_date= $id_pro['fdate'];
+         
+   
+          echo" <h5 style='margin-bottom: 10px; text-align: left;'>$exp_date</h5>";
+
+?>
+
+
+			                    <thead>
+			                        <tr>
+			                            <th style='font-size: 12px; text-align: center;'>Description </th>
+			                            <th style='font-size: 12px'>Amount</th>
+			                        </tr>
+			                    </thead>
+                          <tbody>
+<?php 
+
+ $line2 =	"select * from `incomes_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result2 = mysqli_query($conn,$line2); 
+ while($id_pro2 = mysqli_fetch_assoc($result2)){
+   $exp_cat= $id_pro2['income_category'];
+   $exp = $id_pro2['incomes'];
+   echo"
+                             <tr>
+			                            <td class='col-md-9'>$exp_cat</td>
+			                            <td class='col-md-3'>RM $exp</td>
+                              </tr>";}
+?>
+
+			                        <tr style='background: #689999'>
+			                            <td >
+			                            <p>
+			                                <strong>Total Amount: </strong>
+			                            </p>
+										</td>
+			                           
+			                            <td>
+<?php 
+ $line3 =	"select sum(incomes) as incomes from `incomes_list` WHERE date = '$date' and userid =$userid;" ;  
+ $result3 = mysqli_query($conn,$line3); 
+ $id_pro3 = mysqli_fetch_assoc($result3);
+   $totalexp = $id_pro3['incomes'];
+   echo"
+			                            <p>
+			                                <strong>RM $totalexp</strong>
+                                  </p>";
+?>
+										</td>
+			                        </tr>
+			                        <tr>
+			                           
+			                            
+			                        </tr>
+			                    </tbody>
+			                </table>
 			</div>
       </div>
      <div class="clearfix"> </div>
+     </div>
+     </div>
+</div>
+
+
 </div>
 <!--main page chit chating end here-->
 <!--main page chart start here-->
@@ -182,7 +340,7 @@ if(isset($_POST['dated'])){
 <!--inner block end here-->
 
 </div>
-</div>
+
 <!--slider menu-->
     <?php include 'include/sidebar.php';?>
 
@@ -277,9 +435,16 @@ var date = new Date(),
     day = date.getUTCDate(),
     months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-
+<?php 
+if(isset($_POST['months'])){
+  echo"setSelectBoxByValue('selectmonth', '$month');";
+}
+else
+  echo"
+document.getElementById('daymonth').innerHTML = months[month] + '' ;
 setSelectBoxByText('selectmonth', months[month]);
-
+document.getElementById('year').innerHTML = year;";
+?>
 var clockH = $(".hours");
 var clockM = $(".minutes");
 
@@ -305,7 +470,7 @@ function setSelectBoxByValue(eid, eval) {
 }
 
 function updatemonth(){
-  
+  document.getElementById('daymonth').innerHTML = $('#selectmonth').find(":selected").text();
   document.getElementById("monthform").submit();
 }
 
@@ -637,18 +802,22 @@ var arc = d3.svg.arc()
 ///////////////////////////////////////////////////////////
 
 var data = [
-  <?php 
- $line4 =	"select * from `expense_list` WHERE date = '$date1' and userid =$userid;" ;  
- $result4 = mysqli_query($conn,$line4); 
- while($id_pro4 = mysqli_fetch_assoc($result4)){
-  $expcat4 = $id_pro4['expense_category'];
-   $exp4 = $id_pro4['expenses'];
-   echo"
  {
-    'itemLabel':'$expcat4',
-    'itemValue':$exp4
- },";}
- ?>
+    "itemLabel":"Clothings",
+    "itemValue":90
+ },
+ {
+    "itemLabel":"Food & Drinks",
+    "itemValue":3
+ },
+ {
+    "itemLabel":"Bill",
+    "itemValue":60
+ },
+ {
+    "itemLabel":"Rental",
+    "itemValue":90
+ }
 ];
 
 ///////////////////////////////////////////////////////////
@@ -913,3 +1082,52 @@ function textTween(d, i) {
 update(data);
 </script>
 
+<script>
+// Get the modal
+var modalExp = document.getElementById('myModalExp');
+
+// Get the button that opens the modal
+var btnexp = document.getElementById("myBtnExp");
+
+// Get the modal
+var modalInc = document.getElementById('myModalInc');
+
+// Get the button that opens the modal
+var btninc = document.getElementById("myBtnInc");
+
+// Get the <span> element that closes the modal
+var spanexp = document.getElementById("closeExp");
+var spaninc = document.getElementById("closeInc");
+
+// When the user clicks the button, open the modal 
+btnexp.onclick = function() {
+  modalExp.style.display = "block";
+}
+
+btninc.onclick = function() {
+  modalInc.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanexp.onclick = function() {
+  
+  modalExp.style.display = "none";
+ 
+}
+spaninc.onclick = function() {
+  
+  
+  modalInc.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event1) {
+    if (event1.target == modalInc) {
+        modalInc.style.display = "none";
+    }
+    else if (event1.target == modalExp) {
+       modalExp.style.display = "none";
+  }
+}
+
+</script>
