@@ -168,16 +168,9 @@ body:before {
     <input type="text" placeholder="Email"/>
     <input type="password" placeholder="password"/>
     <button><span style="top: -40px">Login</span> </button>
-    <p class="message">Dont have account ? <a href="#">Register now</a></p>
+    <p class="message">Dont have account ? <a href="register.php">Register now</a></p>
   </form>
-</div>
-
-
-
-
-
-
-				
+</div>				
 				</div>
 			</section>
 

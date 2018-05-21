@@ -164,7 +164,7 @@ body:before {
 <label for='name' >Your Full Name*: </label>
 <input type='text' name='name' id='name' maxlength="50" required />
 <label for='email' >Email Address*:</label>
-<input type='text' name='email' id='email' maxlength="50" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required />
+<input type='email' name='email' id='email' maxlength="50" pattern="[^ @]*@[^ @]*"  required />
 <label for='username' >UserName*:</label>
 <input type='text' name='username' id='username' maxlength="50" required/>
 
