@@ -4,16 +4,51 @@
 $conn = OpenCon();
 echo "Connected Successfully";
 $userid = 123123;
-if(isset($_POST['dated'])){
-  $date = date('Y-m-d', strtotime($_POST['dated']));
-  echo "$date gggggg";
-}else {
-  $date = date('Y-m-d');
-    echo "alert m";}
-?>
-
-<body>	
+if(isset($_POST['months'])){
+  $month = $_POST['months'];}
   
+  else $month = date('m');
+?>
+<style>
+.modal {
+    display: none; /* Hidden by default */
+    z-index: 1; /* Sit on top */
+    padding-top: 10%; /* Location of the box */
+    padding-left:15%;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+<body>	
 <div class="page-container">	
    <div class="left-content">
 	   <div class="mother-grid-inner">
@@ -38,8 +73,79 @@ if(isset($_POST['dated'])){
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
 <div class="inner-block">
+<div id="myModalExp" class="modal">
 
+  <!-- Modal content -->
+  
+  <div class="modal-content ">
+    <span class="close" id="closeExp">&times;</span>
+    
+      <form action="addExp.php" method="post">
+      <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+      <thead>
+			    <tr style='font-size: 12px; text-align: center;'>
+			        Add Expense 
+			    </tr>
+			</thead>                        
+        
+          <tr>
+            <td class='col-md-9'>
+              Category
+            </td>
+            <td class='col-md-9'>
+              Expense (RM)
+            </td>
+          </tr>
+          <tr>
+            <td class='col-md-9'>
+              <input type="text" name="categ">
+            </td>
+            <td class='col-md-9'>
+              <input type="text" name="expen"
+            </td>
+          </tr>
+        </table>
+        <input type ="submit" > 
+      </form>
+  </div>
+  </div>
 
+  <div id="myModalInc" class="modal">
+
+<!-- Modal content -->
+
+<div class="modal-content ">
+  <span class="close"id="closeInc">&times;</span>
+  
+    <form action="addInc.php" method="post">
+    <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+    <thead>
+        <tr style='font-size: 12px; text-align: center;'>
+            Add Income 
+        </tr>
+    </thead>                        
+      
+        <tr>
+          <td class='col-md-9'>
+            Category
+          </td>
+          <td class='col-md-9'>
+            Income (RM)
+          </td>
+        </tr>
+        <tr>
+          <td class='col-md-9'>
+            <input type="text" name="categ">
+          </td>
+          <td class='col-md-9'>
+            <input type="text" name="expen"
+          </td>
+        </tr>
+      </table>
+      <input type ="submit" > 
+    </form>
+</div>
+</div>
 
 <!--mainpage chit-chating-->
 <div class="chit-chat-layer1">
@@ -60,9 +166,23 @@ if(isset($_POST['dated'])){
 					<h3 style="margin-top: -20px; font-size: 18px">Expenses</h3>
           <div>
                 <h5>For :</h5> 
-                <form id='monthform' action ='expenses.php' method='post'>
-                  <input name="dated" id="date" type="date" onchange="updatemonth()" <?php echo"value='$date'";?>>
-
+                <form id='monthform' action ='AddExpense.php' method='post'>
+                  <select name="months" id="selectmonth" onchange="updatemonth()">
+                      <option disabled selected value> -- Select month-- </option>
+                      <option value="1">Jan</option>
+                      <option value="2">Feb</option>
+                      <option value="3">Mar</option>
+                      <option value="4">Apr</option>
+                      <option value="5">May</option>
+                      <option value="6">June</option>
+                      <option value="7">July</option>
+                      <option value="8">Aug</option>
+                      <option value="9">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>                                                                                                  
+                                                      
+                  </select>
                 </form>                                
           </div>
             <div class='row'>
@@ -75,7 +195,7 @@ if(isset($_POST['dated'])){
 <?php 
 
 
-          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `expense_list` WHERE date = '$date' and userid =$userid;" ;  
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `expense_list` WHERE month(date) = '$month' and userid =$userid;" ;  
           $result = mysqli_query($conn,$line); 
           $id_pro = mysqli_fetch_assoc($result);
           $date1 = $id_pro['date'];
@@ -95,7 +215,6 @@ if(isset($_POST['dated'])){
 			                    </thead>
                           <tbody>
 <?php 
-
  $line2 =	"select * from `expense_list` WHERE date = '$date1' and userid =$userid;" ;  
  $result2 = mysqli_query($conn,$line2); 
  while($id_pro2 = mysqli_fetch_assoc($result2)){
@@ -139,11 +258,11 @@ if(isset($_POST['dated'])){
 			            </div>
 						
 					
-                  
+						
 			        </div>    
 				</div>
 					
-
+        <button id="myBtnExp">Add Expense</button> <button id="myBtnInc">Add Incomes</button>
              </div>
       </div>
       <div class="col-md-6 chit-chat-layer1-rit">    	
@@ -154,7 +273,7 @@ if(isset($_POST['dated'])){
 				   
 				
 				    <div class="col geo_main">
-				         <h3 id="geoChartTitle">Spending category percentage</h3>
+				         <h3 id="geoChartTitle"></h3>
 				        <div id="geoChart" class="chart"> </div>
 
 				          <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -277,9 +396,16 @@ var date = new Date(),
     day = date.getUTCDate(),
     months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-
+<?php 
+if(isset($_POST['months'])){
+  echo"setSelectBoxByValue('selectmonth', '$month');";
+}
+else
+  echo"
+document.getElementById('daymonth').innerHTML = months[month] + '' ;
 setSelectBoxByText('selectmonth', months[month]);
-
+document.getElementById('year').innerHTML = year;";
+?>
 var clockH = $(".hours");
 var clockM = $(".minutes");
 
@@ -305,7 +431,7 @@ function setSelectBoxByValue(eid, eval) {
 }
 
 function updatemonth(){
-  
+  document.getElementById('daymonth').innerHTML = $('#selectmonth').find(":selected").text();
   document.getElementById("monthform").submit();
 }
 
@@ -637,18 +763,22 @@ var arc = d3.svg.arc()
 ///////////////////////////////////////////////////////////
 
 var data = [
-  <?php 
- $line4 =	"select * from `expense_list` WHERE date = '$date1' and userid =$userid;" ;  
- $result4 = mysqli_query($conn,$line4); 
- while($id_pro4 = mysqli_fetch_assoc($result4)){
-  $expcat4 = $id_pro4['expense_category'];
-   $exp4 = $id_pro4['expenses'];
-   echo"
  {
-    'itemLabel':'$expcat4',
-    'itemValue':$exp4
- },";}
- ?>
+    "itemLabel":"Clothings",
+    "itemValue":90
+ },
+ {
+    "itemLabel":"Food & Drinks",
+    "itemValue":3
+ },
+ {
+    "itemLabel":"Bill",
+    "itemValue":60
+ },
+ {
+    "itemLabel":"Rental",
+    "itemValue":90
+ }
 ];
 
 ///////////////////////////////////////////////////////////
@@ -913,3 +1043,52 @@ function textTween(d, i) {
 update(data);
 </script>
 
+<script>
+// Get the modal
+var modalExp = document.getElementById('myModalExp');
+
+// Get the button that opens the modal
+var btnexp = document.getElementById("myBtnExp");
+
+// Get the modal
+var modalInc = document.getElementById('myModalInc');
+
+// Get the button that opens the modal
+var btninc = document.getElementById("myBtnInc");
+
+// Get the <span> element that closes the modal
+var spanexp = document.getElementById("closeExp");
+var spaninc = document.getElementById("closeInc");
+
+// When the user clicks the button, open the modal 
+btnexp.onclick = function() {
+  modalExp.style.display = "block";
+}
+
+btninc.onclick = function() {
+  modalInc.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanexp.onclick = function() {
+  
+  modalExp.style.display = "none";
+ 
+}
+spaninc.onclick = function() {
+  
+  
+  modalInc.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event1) {
+    if (event1.target == modalInc) {
+        modalInc.style.display = "none";
+    }
+    else if (event1.target == modalExp) {
+       modalExp.style.display = "none";
+  }
+}
+
+</script>

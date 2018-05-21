@@ -1,5 +1,19 @@
+
 <?php include 'include/head.php';?>
+<?php include 'include/db_connection.php';
+$conn = OpenCon();
+echo "Connected Successfully";
+$userid = 123123;
+if(isset($_POST['dated'])){
+  $date = date('Y-m-d', strtotime($_POST['dated']));
+  echo "$date gggggg";
+}else {
+  $date = date('Y-m-d');
+    echo "alert m";}
+?>
+
 <body>	
+  
 <div class="page-container">	
    <div class="left-content">
 	   <div class="mother-grid-inner">
@@ -42,36 +56,57 @@
 					</div>
 
 					<h3 style="margin-top: -20px; font-size: 18px">Incomes</h3>
+          <div>
+                <h5>For :</h5> 
+                <form id='monthform' action ='income.php' method='post'>
+                  <input name="dated" id="date" type="date" onchange="updatemonth()" <?php echo"value='$date'";?>>
 
-				
+                </form>                                
+          </div>
+            <div class='row'>
+            
+            <div class='receipt-main '>
+            
+            <br/>
+                <div>
+                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+<?php 
 
-					<div class="row">
-					
-			        <div class="receipt-main ">
-			            
-			            <div>
-			                <table style="width: 400px; margin-bottom: 60px" class="table table-bordered">
-			                	<h5 style="margin-bottom: 10px; text-align: left;">1 May 2018</h5>
+
+          $line =	"select *,DATE_FORMAT(date, '%e %M %Y')as fdate from `incomes_list` WHERE date = '$date' and userid =$userid;" ;  
+          $result = mysqli_query($conn,$line); 
+          $id_pro = mysqli_fetch_assoc($result);
+          $date1 = $id_pro['date'];
+          $exp_date= $id_pro['fdate'];
+         
+   
+          echo" <h5 style='margin-bottom: 10px; text-align: left;'>$exp_date</h5>";
+
+?>
+
+
 			                    <thead>
 			                        <tr>
-			                            <th style="font-size: 12px; text-align: center;">Description </th>
-			                            <th style="font-size: 12px">Amount</th>
+			                            <th style='font-size: 12px; text-align: center;'>Description </th>
+			                            <th style='font-size: 12px'>Amount</th>
 			                        </tr>
 			                    </thead>
-			                    <tbody>
-			                        <tr>
-			                            <td class="col-md-9">Clothings</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">Food & Drinks</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">House Rental</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr style="background: #689999">
+                          <tbody>
+<?php 
+
+ $line2 =	"select * from `incomes_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result2 = mysqli_query($conn,$line2); 
+ while($id_pro2 = mysqli_fetch_assoc($result2)){
+   $exp_cat= $id_pro2['income_category'];
+   $exp = $id_pro2['incomes'];
+   echo"
+                             <tr>
+			                            <td class='col-md-9'>$exp_cat</td>
+			                            <td class='col-md-3'>RM $exp</td>
+                              </tr>";}
+?>
+
+			                        <tr style='background: #689999'>
 			                            <td >
 			                            <p>
 			                                <strong>Total Amount: </strong>
@@ -79,9 +114,16 @@
 										</td>
 			                           
 			                            <td>
+<?php 
+ $line3 =	"select sum(incomes) as incomes from `incomes_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result3 = mysqli_query($conn,$line3); 
+ $id_pro3 = mysqli_fetch_assoc($result3);
+   $totalexp = $id_pro3['incomes'];
+   echo"
 			                            <p>
-			                                <strong>RM 300</strong>
-			                            </p>
+			                                <strong>RM $totalexp</strong>
+                                  </p>";
+?>
 										</td>
 			                        </tr>
 			                        <tr>
@@ -92,46 +134,6 @@
 			                </table>
 
 
-			                   <table style="width: 400px" class="table table-bordered">
-			                	<h5 style="margin-bottom: 10px; text-align: left;">2 May 2018</h5>
-			                    <thead>
-			                        <tr>
-			                            <th style="font-size: 12px; text-align: center;">Description </th>
-			                            <th style="font-size: 12px">Amount</th>
-			                        </tr>
-			                    </thead>
-			                    <tbody>
-			                        <tr>
-			                            <td class="col-md-9">Clothings</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">Food & Drinks</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr>
-			                            <td class="col-md-9">House Rental</td>
-			                            <td class="col-md-3">RM 100</td>
-			                        </tr>
-			                        <tr style="background: #689999">
-			                            <td >
-			                            <p>
-			                                <strong>Total Amount: </strong>
-			                            </p>
-										</td>
-			                           
-			                            <td>
-			                            <p>
-			                                <strong>RM 300</strong>
-			                            </p>
-										</td>
-			                        </tr>
-			                        <tr>
-			                           
-			                            
-			                        </tr>
-			                    </tbody>
-			                </table>
 			            </div>
 						
 					
@@ -150,7 +152,7 @@
 				   
 				
 				    <div class="col geo_main">
-				         <h3 id="geoChartTitle"></h3>
+				         <h3 id="geoChartTitle">Income category Chart</h3>
 				        <div id="geoChart" class="chart"> </div>
 
 				          <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -273,8 +275,8 @@ var date = new Date(),
     day = date.getUTCDate(),
     months = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
-document.getElementById('daymonth').innerHTML = months[month] + " " ;
-document.getElementById('year').innerHTML = year;
+
+setSelectBoxByText('selectmonth', months[month]);
 
 var clockH = $(".hours");
 var clockM = $(".minutes");
@@ -286,6 +288,23 @@ function time() {
       h = d.getHours() % 12 / 12 * 360 + (m / 12);  
     clockH.css("transform", "rotate("+h+"deg)");
     clockM.css("transform", "rotate("+m+"deg)");  
+}
+
+function setSelectBoxByText(eid, etxt) {
+    var eid = document.getElementById(eid);
+    for (var i = 0; i < eid.options.length; ++i) {
+        if (eid.options[i].text === etxt)
+            eid.options[i].selected = true;
+    }
+}
+
+function setSelectBoxByValue(eid, eval) {
+    document.getElementById(eid).value = eval;
+}
+
+function updatemonth(){
+  
+  document.getElementById("monthform").submit();
 }
 
 var clock = setInterval(time, 1000);
@@ -616,22 +635,18 @@ var arc = d3.svg.arc()
 ///////////////////////////////////////////////////////////
 
 var data = [
+  <?php 
+ $line4 =	"select * from `incomes_list` WHERE date = '$date1' and userid =$userid;" ;  
+ $result4 = mysqli_query($conn,$line4); 
+ while($id_pro4 = mysqli_fetch_assoc($result4)){
+  $expcat4 = $id_pro4['income_category'];
+   $exp4 = $id_pro4['incomes'];
+   echo"
  {
-    "itemLabel":"Clothings",
-    "itemValue":90
- },
- {
-    "itemLabel":"Food & Drinks",
-    "itemValue":3
- },
- {
-    "itemLabel":"Bill",
-    "itemValue":60
- },
- {
-    "itemLabel":"Rental",
-    "itemValue":90
- }
+    'itemLabel':'$expcat4',
+    'itemValue':$exp4
+ },";}
+ ?>
 ];
 
 ///////////////////////////////////////////////////////////
