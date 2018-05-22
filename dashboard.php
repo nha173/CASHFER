@@ -2,7 +2,6 @@
 <?php include 'include/head.php';?>
 <?php include 'include/db_connection.php';
 $conn = OpenCon();
-echo "Connected Successfully";
 $userid = 123123;
 $date = date('Y-m-d');
 ?>
@@ -70,7 +69,7 @@ $date = date('Y-m-d');
 		</script>
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
-<div class="inner-block" style="padding-top: 10px;">
+<div class="inner-block">
 <h2> I want to </h2>
 <br/>
 
@@ -80,10 +79,10 @@ $date = date('Y-m-d');
     <span class="close" id="closeExp">&times;</span>
     
       <form action="addExp.php" method="post">
-      <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+      <table style='width:auto; margin-bottom: 30px; margin-top: 30px' class='table table-bordered'>
       <thead>
-			    <tr style='font-size: 12px; text-align: center;'>
-			        Add Expense 
+			    <tr style='font-size: 12px; text-align: center; '>
+			        <h4 style='font-size: 13pt;'>Add Expenses</h4> 
 			    </tr>
 			</thead>                        
         
@@ -101,17 +100,18 @@ $date = date('Y-m-d');
           </tr>
           <tr>
             <td class='col-md-9'>
-              <input type="text" name="categ" required>
+              <input type="text" name="categ">
             </td>
             <td class='col-md-9'>
-              <input type="text" name="expen" onkeyup="validatephone(this);" required >
+              <input type="text" name="expen" onkeyup="validatephone(this);">
             </td>
             <td class='col-md-9'>
-            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated" required>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
             </td>
           </tr>
         </table>
-        <input type ="submit" > 
+        <input style="border:5px; padding:10px; " type ="submit" > 
+         
       </form>
   </div>
 </div>  <!-- Modal div 1 end>-->
@@ -121,10 +121,10 @@ $date = date('Y-m-d');
   <span class="close"id="closeInc">&times;</span>
   
     <form action="addInc.php" method="post">
-    <table style='width:auto; margin-bottom: 60px' class='table table-bordered'>
+    <table style='width:auto; margin-bottom: 30px; margin-top: 30px' class='table table-bordered'>
     <thead>
         <tr style='font-size: 12px; text-align: center;'>
-            Add Income 
+             <h4 style='font-size: 13pt;'>Add Incomes</h4> 
         </tr>
     </thead>                        
       
@@ -141,17 +141,17 @@ $date = date('Y-m-d');
         </tr>
         <tr>
           <td class='col-md-9'>
-            <input type="text" name="categi" required>
+            <input type="text" name="categi">
           </td>
           <td class='col-md-9'>
-            <input type="text" name="incom" required>
+            <input type="text" name="incom"  >
           </td>
           <td class='col-md-9'>
-            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated" required>
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
             </td>
         </tr>
       </table>
-      <input type ="submit" >   
+      <input style="border:5px; padding:10px; " type ="submit" >   
     </form>
   </div>
 </div> <!-- Modal div 2 end>-->
@@ -159,7 +159,7 @@ $date = date('Y-m-d');
 <div class="chit-chat-layer1">
 	<div class="col-md-6 chit-chat-layer1-left">
     <div class="work-progres">
-      <button id="myBtnExp" style="border:5px; padding:10px;  margin-bottom:15px;">Add Expense</button>  
+      <button id="myBtnExp" style="border:5px; padding:10px;  margin-bottom:15px;">Add Expenses</button>  
 
       
 
@@ -242,7 +242,7 @@ $date = date('Y-m-d');
 <div class="col-md-6 chit-chat-layer1-rit">    	
       	  <div class="work-progres">
           <button id="myBtnInc" style="border:5px; padding:10px; margin-bottom:15px;">Add Incomes</button> 
-          <h3>Today Income</h3>	
+          <h3>Today Incomes</h3>	
 
           <div class='row'>
           <div align="center">
@@ -1077,21 +1077,7 @@ function textTween(d, i) {
 
 update(data);
 </script>
-<script>
-function validatephone(phone) 
-{
-    var maintainplus = '';
-    var numval = phone.value
-    if ( numval.charAt(0)=='+' )
-    {
-        var maintainplus = '';
-    }
-    curphonevar = numval.replace(/[\\A-Za-z!"£$%^&\,*+_={};:'@#~,.Š\/<>?|`¬\]\[]/g,'');
-    phone.value = maintainplus + curphonevar;
-    var maintainplus = '';
-    phone.focus;
-}
-</script>
+
 <script>
 // Get the modal
 var modalExp = document.getElementById('myModalExp');
@@ -1140,4 +1126,20 @@ window.onclick = function(event1) {
   }
 }
 
+</script>
+
+<script>
+function validatephone(phone) 
+{
+    var maintainplus = '';
+    var numval = phone.value
+    if ( numval.charAt(0)=='+' )
+    {
+        var maintainplus = '';
+    }
+    curphonevar = numval.replace(/[\\A-Za-z!"£$%^&\,*+_={};:'@#~,.Š\/<>?|`¬\]\[]/g,'');
+    phone.value = maintainplus + curphonevar;
+    var maintainplus = '';
+    phone.focus;
+}
 </script>

@@ -30,7 +30,7 @@
 				<h2>CASHFER</h2>
 				<p>Secure Your Future With Us<br />Today. Tomorrow. Together</p>
 				<ul class="actions">
-					<li><a href="#" class="button special big">Get Started</a></li>
+					<li><a href="register.php" class="button special big">Get Started</a></li>
 				</ul>
 			</section>
 

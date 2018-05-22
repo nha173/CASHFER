@@ -156,7 +156,7 @@ body:before {
 <div style="margin-top: -50px" class="form">
   <div class="thumbnail"><img style="margin-top: -40px; height:120px; width: 110px; margin-left: -10px" src="images/ic3.png"/></div>
   
-  <form id='register' action='register.php' method='post' 
+  <form id='register' action='dashboard.php' method='post' 
     accept-charset='UTF-8'>
 <fieldset >
 <legend>Register</legend>

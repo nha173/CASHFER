@@ -2,14 +2,13 @@
 <?php include 'include/head.php';?>
 <?php include 'include/db_connection.php';
 $conn = OpenCon();
-echo "Connected Successfully";
 $userid = 123123;
 if(isset($_POST['dated'])){
   $date = date('Y-m-d', strtotime($_POST['dated']));
   echo "$date gggggg";
 }else {
   $date = date('Y-m-d');
-    echo "alert m";}
+   }
 ?>
 
 <body>	
@@ -43,7 +42,7 @@ if(isset($_POST['dated'])){
 <div class="chit-chat-layer1">
 	<div class="col-md-6 chit-chat-layer1-left">
                <div class="work-progres">
-                    <div style="margin-top: -70px" class="box">
+                    <div style="margin-top: -60px" class="box">
 						<div class="clock">
 							<span class="hours"></span>
 							<span class="minutes"></span>
@@ -69,7 +68,7 @@ if(isset($_POST['dated'])){
             
             <br/>
                 <div>
-                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+                    <table style='width: 470px; margin-bottom: 60px' class='table table-bordered'>
 <?php 
 
 

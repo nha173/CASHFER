@@ -1,7 +1,7 @@
 <?php include 'include/head.php';?>
 <?php include 'include/db_connection.php';
 $conn = OpenCon();
-echo "Connected Successfully";
+
 $userid = 123123;
 if(isset($_POST['month'])){
   $month = $_POST['month'];
@@ -50,7 +50,7 @@ if(isset($_POST['month'])){
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
 <!--inner block start here-->
-<div style="margin-top: -60px" class="inner-block">
+<div style="margin-top: -80px" class="inner-block">
     <div class="blank">
 	    	<div class="blankpage-main">
 	    		<div class="content">
@@ -303,7 +303,7 @@ h2 {
         '<h2>Monthly Report Overview</h2>',
         '<form id="monthform" action="report.php" name = "monthform" method="post">',
        
-       '<select name="month" onchange="updatemonth()">',
+       '<select name="month" onchange="updatemonth()" >' ,
        '<option disabled selected value> -- Select month-- </option>',
        '<option value="1">January</option>',
        '<option value="2">February</option>',
