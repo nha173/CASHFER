@@ -70,7 +70,7 @@ $date = date('Y-m-d');
 		</script>
 		<!-- /script-for sticky-nav -->
 <!--inner block start here-->
-<div class="inner-block">
+<div class="inner-block" style="padding-top: 10px;">
 <h2> I want to </h2>
 <br/>
 
@@ -101,13 +101,13 @@ $date = date('Y-m-d');
           </tr>
           <tr>
             <td class='col-md-9'>
-              <input type="text" name="categ">
+              <input type="text" name="categ" required>
             </td>
             <td class='col-md-9'>
-              <input type="text" name="expen"
+              <input type="text" name="expen" onkeyup="validatephone(this);" required >
             </td>
             <td class='col-md-9'>
-            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated" required>
             </td>
           </tr>
         </table>
@@ -141,13 +141,13 @@ $date = date('Y-m-d');
         </tr>
         <tr>
           <td class='col-md-9'>
-            <input type="text" name="categi">
+            <input type="text" name="categi" required>
           </td>
           <td class='col-md-9'>
-            <input type="text" name="incom">
+            <input type="text" name="incom" required>
           </td>
           <td class='col-md-9'>
-            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated">
+            <input type = "date" value = "<?php echo date('Y-m-d')?>" name="dated" required>
             </td>
         </tr>
       </table>
@@ -169,7 +169,7 @@ $date = date('Y-m-d');
             
             <br/>
                 <div align="center">
-                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+                    <table style='width: 500px; margin-bottom: 60px' class='table table-bordered'>
 <?php 
 
 
@@ -255,7 +255,7 @@ $date = date('Y-m-d');
             
             <br/>
                 <div>
-                    <table style='width: 400px; margin-bottom: 60px' class='table table-bordered'>
+                    <table style='width: 500px; margin-bottom: 60px' class='table table-bordered'>
 <?php 
 
 
@@ -1077,7 +1077,21 @@ function textTween(d, i) {
 
 update(data);
 </script>
-
+<script>
+function validatephone(phone) 
+{
+    var maintainplus = '';
+    var numval = phone.value
+    if ( numval.charAt(0)=='+' )
+    {
+        var maintainplus = '';
+    }
+    curphonevar = numval.replace(/[\\A-Za-z!"£$%^&\,*+_={};:'@#~,.Š\/<>?|`¬\]\[]/g,'');
+    phone.value = maintainplus + curphonevar;
+    var maintainplus = '';
+    phone.focus;
+}
+</script>
 <script>
 // Get the modal
 var modalExp = document.getElementById('myModalExp');
